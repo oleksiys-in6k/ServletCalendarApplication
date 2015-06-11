@@ -12,12 +12,13 @@ import java.util.Calendar;
 
 
 public class CalendarController extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
         int year = Integer.parseInt(request.getParameter("year"));
         int month = Integer.parseInt(request.getParameter("month"));
@@ -27,13 +28,11 @@ public class CalendarController extends HttpServlet {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-
         ServletOutputStream out = response.getOutputStream();
         CalendarWriter calendarWriter = new HTMLCalendarWriter();
 
         out.println(calendarWriter.render(new MonthCalendar(calendar)));
 
         response.getWriter().flush();
-
     }
 }

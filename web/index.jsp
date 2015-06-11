@@ -2,6 +2,7 @@
 <%@ page import="alex.app.fillMonthCalendar.Week" %>
 <%@ page import="alex.app.fillMonthCalendar.WeekDay" %>
 <%@ page import="alex.app.fillMonthCalendar.WeekDayType" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
 <%--
   Created by IntelliJ IDEA.
@@ -16,27 +17,32 @@
     <title></title>
 </head>
 <body>
-<% int year = Integer.parseInt(request.getParameter("year"));
-    int month = Integer.parseInt(request.getParameter("month"));
+<%
     Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.MONTH, month);
-    calendar.set(Calendar.YEAR, year);
-
-    calendar.set(Calendar.DAY_OF_MONTH, 1);
+    if ((request.getParameter("year") != null) && (request.getParameter("month") != null)) {
+        calendar.set(Integer.valueOf(request.getParameter("year")),
+                Integer.valueOf(request.getParameter("month")),
+                1);}
 %>
 
+<%
+    Calendar prevMonth = (Calendar) calendar.clone();
+    prevMonth.add(Calendar.MONTH, -1);
+%>
+<a href="/?year=<%=calendar.get(Calendar.YEAR)%>&month=<%=prevMonth.get(Calendar.MONTH)%>">
+    <%=new SimpleDateFormat("YYYY MMM").format(prevMonth.getTime())%>
+</a>
 
-<a href="/?year=<%=calendar.get(Calendar.YEAR)%>&month=<%=calendar.get(Calendar.MONTH)-1%>">previous</a>
-<%--<%calendar.add(Calendar.MONTH, 2);%>--%>
-
-<br>
-<a href="/?year=<%=calendar.get(Calendar.YEAR)%>&month=<%=calendar.get(Calendar.MONTH)+1%>">next</a>
-<%--<%calendar.set(Calendar.MONTH, month + 1);%>--%>
-
+<%
+    Calendar nextMonth = (Calendar) calendar.clone();
+    nextMonth.add(Calendar.MONTH, 1);
+%>
+<a href="/?year=<%=calendar.get(Calendar.YEAR)%>&month=<%=nextMonth.get(Calendar.MONTH)%>">
+    <%=new SimpleDateFormat("YYYY MMM").format(nextMonth.getTime())%>
+</a>
 <br>
 
 <%
-//    calendar.set(Calendar.MONTH, month + 1);
     MonthCalendar monthCalendar = new MonthCalendar(calendar);
 %>
 
