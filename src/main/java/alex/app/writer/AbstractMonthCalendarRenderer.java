@@ -19,7 +19,6 @@ public abstract class AbstractMonthCalendarRenderer implements CalendarWriter {
         result += renderHeader();
         result += getCloseWeekToken();
         result += renderWeeks(monthCalendar);
-
         result += renderPreviousButton(monthCalendar);
         result += renderNextButton(monthCalendar);
 
@@ -33,15 +32,10 @@ public abstract class AbstractMonthCalendarRenderer implements CalendarWriter {
 
         String result = "";
         result += openLink();
-        result += getNextCalendar(nextCalendar);
+        result += getCalendar(nextCalendar);
         result += textNext();
         result += closeLink();
         return result;
-    }
-
-    private String getNextCalendar(Calendar calendar) {
-        return "?year=" + calendar.get(Calendar.YEAR) +
-                "&month=" + (calendar.get(Calendar.MONTH)+1);
     }
 
     private String renderPreviousButton(MonthCalendar monthCalendar) {
@@ -50,13 +44,13 @@ public abstract class AbstractMonthCalendarRenderer implements CalendarWriter {
 
         String result = "";
         result += openLink();
-        result += getPrevCalendar(prevCalendar);
+        result += getCalendar(prevCalendar);
         result += textPrev();
         result += closeLink();
         return result;
     }
 
-    private String getPrevCalendar(Calendar prevCalendar) {
+    private String getCalendar(Calendar prevCalendar) {
         return "?year=" + prevCalendar.get(Calendar.YEAR) +
                 "&month=" + (prevCalendar.get(Calendar.MONTH));
     }
